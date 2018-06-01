@@ -1,0 +1,39 @@
+Tenemos esta clase principal:
+
+public static void main(String[] args) { 
+    Gato gato = new Gato(); 
+    System.out.println(gato.nombre);
+    System.out.println(gato.edad); 
+    System.out.println(gato.onomatopeya); 
+    System.out.println(gato.id);
+}
+
+Ahora, supongamos que cada una de estas clases posee esta clase main:
+
+package gato;
+public class Gato {
+    public String nombre = "michi"; 
+    protected int edad = 2; 
+    String onomatopeya = "miau";
+    private int id;
+}
+package gato.especies;
+public class Persa extends Gato { }
+
+package gato;
+public class DuenioGato { }
+
+package raton;
+public class Raton { }
+
+gato.nombre: compila en todas las clases, porque la variable publica la vee cualquier clase.
+gato.id: solo compila en la clase Gato, la variable privada solo es visible en la misma clase.
+gato.onomatopeya: solo compila en la clase Gato y en la clase DuenioGato, la variable solo es visible en el mismo paquete.
+gato.edad: solo compila en la clase Gato y en la clase DuenioGato, la variable solo es visible en el mismo paquete.
+
+protected: permite subclases y clases en el mismo paquete
+Pero como accedemos por la clase Gato a esa variable no se beneficia de la herencia, hay que recordar que si no esta
+en el mismo paquete la clase esta debe ser subclase osea Gato no es una subclase de Gato, ahora si hubiera sido de esta 
+manera:
+
+Persa gato = new Persa(), ahora si podria acceder a la variable protegida, ya que Persa es una subclase de gato. 

@@ -1,0 +1,20 @@
+abstract class Gato {
+    String nombre = "El gato"; 
+    void comer() { }
+}
+
+class Persa extends Gato {
+    void comer() { } 
+}
+
+static y final pueden ir en la linea 2, si static va en la linea 3, tambien deberia
+ir en la linea 7 sino fallaria en compilacion, final no podria ir en la linea 3 sino
+este metodo no se podria extender, final si podria ir en la linea 7 ya que Persa no
+tiene una subclase.
+
+final evita que una variable cambie o que un metodo se anule.
+static y final pueden agregarse a nivel de clase tambien.
+final evita que una clse se pueda extender.
+Los metodos como las clases no pueden ser tanto abstractas como finales.
+
+La clase String es final.

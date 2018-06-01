@@ -1,0 +1,31 @@
+La Anulacion y la Sobrecarga ocurren cuando tienen el mismo nombre.
+
+public class Principal {
+    public void suma() { }
+}
+
+public class Secundario extends Principal {
+    public void suma() { }
+    public void suma(int b) { }
+    public int sumA() throws Exception { return 0; }
+}
+
+La linea 8 es anulacion ya que es la misma firma(nombre + parametros)
+La linea 9 es sobrecarga (La sobrecarga se distingue porque los parametros varian ya sea en tipo o en numero)
+La linea 10 no es ninguno ya que que el nombre del metodo es distinto.
+
+En sobrecarga java busca primero la coincidencia mas cercana:
+
+- Exactamente el mismo tipo (int).
+- Igualando a un tipo de superclase.
+- Convirtiendo a un tipo de primitivo mayor (long).
+- Convirtiendo a un tipo autoboxed (Integer, Long no se puede solo cambia una vez la variable).
+- Varargs.
+
+En la anulacion:
+- El modificador de acceso debe ser el mismo o mas accesisble.
+- El tipo de devolución debe ser del mismo tipo o más restrictivo, también conocido como tipos de devolución covariantes.
+- Si se lanzan excepciones checked, solo se pueden lanzar las mismas excepciones o subclases de esas excepciones o tambien
+ninguna excepcion(Pero si en padre no se lanza excepciones checked y en la subclase si falla al compilar la subclase,
+si es unchecked no hubiera problemas).
+- Los métodos no deben ser estáticos. (Si lo son, el método está oculto y no se reemplaza).

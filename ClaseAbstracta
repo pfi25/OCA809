@@ -1,0 +1,22 @@
+abstract class Gato { 
+    _____________________
+}
+
+class Persa extends Gato {
+    void comer() {} 
+}
+
+En la linea subrayada se puede escribir lo siguiente:
+
+- Puede estar en blanco ya que una clase abstracta puede no contener un metodo y menos un
+metodo abstracto.
+- abstract void comer(); ojo que termina en punto y coma, este metodo es obligatorio anularlo 
+ya que la clase Persa no es abstracto.
+- void comer(){} esta tiene la misma firma para que Persa pueda compilar.
+
+Los metodos abstractos no pueden aparecer en una clase que no sea abstracta.
+
+La primera subclase concreta de una clase abstracta es necesaria para implementar todos los métodos 
+abstractos que no fueron implementados por una superclase.
+
+Hay muchas otras formas. Por ejemplo, puede hacer que el método clean () arroje una RuntimeException.

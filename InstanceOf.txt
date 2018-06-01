@@ -1,0 +1,61 @@
+a instanceof b
+
+a es una instancia de b
+a es una subclase de b (directa o indirectamente)
+a implementa una interfaz b
+
+class Animal{}
+class Perro extends Animal{}
+class Gato extends Animal{}
+
+Animal a = new Gato();
+
+a instanceof Gato; --> true
+a instanceof Animal; --> true
+a instanceof Perro; --> false
+
+La referencia variable es Animal por lo que puede haber un Perro ahi.
+En tiempo de ejecucion java sabe que la variable apunta a un Gato.
+
+x instanceof Object --> casi siempre true
+si x es null litearl o una referencia a null es false(null no es un obajeto)
+
+Gato g = new Gato();
+g instanceof Perro; --> No compila
+El compilador sabe que no hay forma posible de que una referencia de variable Gato sea un Perro, 
+ya que Gato no extiende Perro directa o indirectamente.
+La verificacion de compilacion solo se aplica cuando se llama a instanceof en una clase.
+Al verificar si un objeto es una instancia de una interfaz, Java espera hasta el tiempo de 
+ejecución para realizar la comprobación. La razón es que una subclase podría implementar esa 
+interfaz y el compilador no lo sabría
+
+public interface Madre{}
+public class Gato extends Animal{}
+
+Animal a = new Gato();
+a instanceof Madre;
+
+El compilador permite la instrucción porque más adelante podría haber una clase como esta:
+
+class MadreGato extends Gato implements Madre { }
+
+El compilador sabe que se podría agregar una interfaz, por lo que la sentencia instanceof podría 
+ser cierta para algunas subclases, mientras que no hay forma posible de convertir un Gato en un Perro.
+El operador instanceof se usa comúnmente para determinar si una instancia es una subclase de un objeto 
+particular antes de aplicar un molde explícito.
+
+public void AlimentarAnimal(Animal animal) { 
+    if(animal instanceof Vaca) {
+        ((Vaca)animal).addHierba();
+    } else if(animal instanceof Ave) {
+        ((Ave)animal).addAgua();
+    } else if(animal instanceof Leon) {
+        ((Leon)animal).addCarne(); 
+    } else {
+        throw new RuntimeException("animal no soportado en el metodo"); 
+    }
+}
+
+Esta no es una buena manera de escribir código. La instanceof y la práctica de casting con las declaraciones 
+es extremadamente rara fuera del examen. Se usa principalmente cuando se escribe una biblioteca que será utilizada 
+por muchos otros.

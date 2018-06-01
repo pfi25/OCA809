@@ -1,0 +1,19 @@
+public class ListHelper {
+    public List <String> copyAndSortList(List <String> original) {
+        List <String> list = new ArrayList <String>(original); 
+        sort(list);
+        return list;
+    } 
+}
+
+Notamos que sort es estatico:
+
+import static java.util.Collections.sort; 
+import static java.util.Collections.*;
+
+import java.util.*; o sino usar:
+
+import java.util.List; 
+import java.util.ArrayList;
+
+Puede importar java.lang. *. Sin embargo, este paquete siempre se importa si lo especifica o no.
