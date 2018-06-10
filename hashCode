@@ -1,0 +1,77 @@
+Siempre que sobrescriba equals (), también se espera que anule hashCode (). El código hash 
+se usa cuando se almacena el objeto como una clave en un mapa.
+
+Un código hash es un número que coloca instancias de una clase en un número finito de categorías.
+
+ejm:
+
+Puedes hacer 13 pilas de cartas: todos los ases en una pila, los dos en otra pila, y así sucesivamente.
+Las cartas son iguales si tienen el mismo rango y palo. Van en la misma pila (código hash) si tienen el 
+mismo rango.
+
+public class Persona {
+    private String nombre;
+    private String peso;
+    
+    public Persona(String n, String a) {
+        if (n == null || a == null)
+            throw new IllegalArgumentException();
+    
+        nombre = n;
+        peso = a; 
+    }
+
+    public boolean equals(Object obj) {
+        if ( !(obj instanceof Persona)) 
+            return false;
+        Persona c = (Persona) obj;
+        return nombre.equals(c.nombre) && peso.equals(c.peso);
+    }
+
+    public int hashCode() {
+        return nombre.hashCode(); 
+    }
+}
+
+En el constructor, se asegura de que ninguna de las variables de instancia sea nula. Esta comprobación permite 
+que equals() sea más simple porque no tiene que preocuparse por null allí. El método hashCode() es bastante 
+simple. Pregunta al nombre su código hash y lo usa.
+El código hash es solo un número.
+No es necesario utilizar todas las variables de instancia en un método hashCode(). Es común no incluir variables 
+booleanas y char en el código hash.
+
+- Dentro del mismo programa, el resultado de hashCode() no debe cambiar. Esto significa que no debe incluir 
+variables que cambien al calcular el código hash. En nuestro ejemplo de Persona, incluir el nombre está bien. 
+Incluir el peso no se debe a que las personas cambien de peso regularmente.
+
+- Si equals() devuelve true cuando se llama con dos objetos, la llamada a hashCode () en cada uno de esos objetos 
+debe devolver el mismo resultado. Esto significa que hashCode() puede usar un subconjunto de las variables que es 
+equals().
+
+- Si equals() devuelve false cuando se llama con dos objetos, llamar a hashCode() en cada uno de esos objetos no 
+tiene que devolver un resultado diferente. Esto significa que los resultados de hashCode() no necesitan ser únicos 
+cuando se invocan objetos desiguales.
+
+
+Leon, tiene tres variables de instancia y solo usó id en el método equals(), ¿cuál de estos crees que son métodos 
+legales hashCode()?
+
+public int hashCode() { return id; }
+public int hashCode() { return 6; }
+public long hashcode() { return id; }
+public int hashCode() { return id * 7 + age; }
+
+El primero es lo que esperarías que fuera el método hashCode (). 
+El segundo también es legal. No es particularmente eficiente. Es como poner la baraja de cartas en una pila gigante. 
+Pero es legal. 
+El tercero no es una anulación de hashCode (). Utiliza una c minúscula, lo que lo convierte en un método diferente. 
+Si fuera una anulación, no se compilaría porque el tipo de devolución es incorrecto. 
+El cuarto no es legal porque usa más variables que equals().
+
+Es común multiplicar por un número primo al combinar múltiples campos en el código hash. Esto hace que el código hash 
+sea más único, lo que ayuda a la hora de distribuir objetos en cubos.
+
+public int hashCode() {
+    return keyField + 7 * otherKeyField.hashCode();
+}
+

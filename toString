@@ -1,0 +1,34 @@
+Java llama automáticamente al método toString () si intenta imprimir un objeto.
+Algunas clases ofrecen una implementación legible por humanos de toString() y otras no.
+
+public static void main(String[] args) {
+    System.out.println(new ArrayList()); // []
+    System.out.println(new String[0]); // [Ljava.lang.String;@65cc892e
+}
+
+public class Login { 
+    private String usuario; 
+    private String clave;
+    
+    public Usuario(String usuario, String clave) { 
+        this.usuario = usuario;
+        this.clave = clave;
+    }
+    
+    @Override
+    public String toString() {
+        return usuario; 
+    }
+
+    public static void main(String[] args) { 
+        Login l = new Login("Pablo", "123456"); 
+        System.out.println(l); // Pablo
+    }
+}
+
+Libreria de apache commons lang
+public String toString() {
+    return ToStringBuilder.reflectionToString(this,ToStringStyle.SHORT_PREFIX_STYLE); 
+}
+devuelve todas las variables de instancia, el segundo parametro es opcional.
+Reflexion es una técnica utilizada en Java para ver información sobre la clase en tiempo de ejecución.

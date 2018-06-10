@@ -1,0 +1,36 @@
+El tipo final de clase anidada no es una clase interna. Una clase anidada estática es una clase estática definida en 
+el nivel de miembro. Se puede crear una instancia sin un objeto de la clase adjunta, por lo que no puede acceder a 
+las variables de instancia sin un objeto explícito de la clase adjunta. Por ejemplo, new OuterClass (). Var permite 
+el acceso a la variable de instancia var.
+
+
+- El anidamiento crea un espacio de nombre porque el nombre de clase adjunto debe usarse para referirse a él.
+- Puede hacerse privado o usar uno de los otros modificadores de acceso para encapsularlo. 
+- La clase adjunta puede hacer referencia a los campos y métodos de la clase anidada estática.
+
+public class Enclosing { 
+    static class Nested {
+        private int price = 6; 
+    }
+    public static void main(String[] args) { 
+        Nested nested = new Nested(); 
+        System.out.println(nested.price);
+    } 
+}
+
+importar una clase anidada estática es interesante. Puedes importarlo usando una importación regular:
+
+package bird;
+public class Toucan {
+    public static class Beak {}
+}
+
+package watcher;
+import bird.Toucan.Beak; 
+public class BirdWatcher {
+    Beak beak; 
+}
+
+Y dado que es estático, alternativamente puede usar una importación estática: importa static bird.Toucan.Beak;
+Cualquiera de los dos compilará. Sorprendente, ¿verdad? Java trata la clase anidada estática como si fuera un espacio de 
+nombres.

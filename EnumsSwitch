@@ -1,0 +1,97 @@
+Estaciones verano = Estaciones.VERANO; 
+switch (verano) {
+    case OTONIO:
+        System.out.println("Es otonio!"); 
+        break;
+    case VERANO:
+        System.out.println("Es verano!"); 
+        break;
+    default:
+        System.out.println("Que estacion es?");
+}
+
+Tenga en cuenta que simplemente escribimos el valor de la enumeración en lugar de escribir 
+Estaciones.OTONIO. La razón es que Java ya sabe que las únicas coincidencias posibles pueden ser 
+valores enum. Java trata el tipo enum como implícito. De hecho, si tuvieras que escribir el 
+caso Estaciones.OTONIO, no compilaría.
+
+switch (verano) {
+    case 0: // NO COMPILA
+        System.out.println("No compila!");
+        break; 
+}
+
+public enum Estaciones {
+    OTONIO("Bajo"), PRIMAVERA("Medio"), VERANO("Alto"), INVIERNO("Medio");
+    private String visitas;
+    
+    private Estaciones(String visitas) {
+        this.visitas = visitas;
+    }
+
+    public void imprimirVisitas() {
+        System.out.println(visitas);
+    } 
+}
+
+Tenemos un punto y coma. Esto es obligatorio si
+hay algo en la enumeración además de los valores.
+
+recuerde que el punto y coma al final de los valores enum es opcional solo si lo único en la enumeración 
+es esa lista de valores.
+
+El constructor es privado porque solo se puede invocar desde la enumeración. El código no se compilará con 
+un constructor público.
+
+Estaciones.VERANO.imprimirVisitas();
+
+Observe cómo parece que no llamamos al constructor. Solo decimos que queremos el valor enum. La primera vez 
+que solicitamos cualquiera de los valores enum, Java construye todos los valores enum. Después de eso, Java 
+simplemente devuelve los valores enum ya construidos. 
+
+
+public enum SoloUno { 
+    ONCE(true);
+    private SoloUno(boolean b) { 
+        System.out.println("constructor");
+    }
+    
+    public static void main(String[] args) {
+        SoloUno primero = SoloUno.ONCE; // imprime constructor
+        SoloUno segundo = SoloUno.ONCE; // no imprime nada 
+    }
+}
+
+public enum Season { 
+    WINTER {
+        public void printHours() { System.out.println("9am-3pm"); }
+    }, SPRING{ 
+        public void printHours() { System.out.println("9am-5pm"); }
+    }, SUMMER{
+        public void printHours() { System.out.println("9am-7pm"); }
+    }, FALL { 
+        public void printHours() { System.out.println("9am-5pm"); }
+    };
+
+    public abstract void printHours(); 
+}
+
+Parece que creamos una clase abstracta y un grupo de pequeñas subclases. De alguna manera lo hicimos 
+La enumeración en sí tiene un método abstracto. Esto significa que se requieren todos y cada uno de 
+los valores enum para implementar este método. Si olvidamos uno, obtenemos un error de compilación.
+
+Si no queremos que todos y cada uno de los valores enum tengan un método, podemos crear una implementación 
+predeterminada y anularla solo para los casos especiales:
+
+public enum Season3 { 
+    WINTER {
+        public void printHours() { System.out.println("short hours"); } 
+    }, SUMMER {
+        public void printHours() { System.out.println("long hours"); } 
+    }, SPRING, FALL;
+    
+    public void printHours() { System.out.println("default hours"); }
+}
+
+La razón principal por la que se alargan es que cuando comienzas con un método de una o dos líneas y luego lo 
+declaras para cada uno de tus doce tipos de enum, crece mucho.

@@ -1,0 +1,53 @@
+Una clase interna local es una clase anidada definida dentro de un método. Al igual que las variables locales, 
+una declaración de clase interna local no existe hasta que se invoca el método, y sale del alcance cuando el 
+método retorna. Esto significa que puede crear instancias solo desde el. 
+Esas instancias aún se pueden devolver desde el método. Así es cómo funcionan las variables locales.
+
+Propiedades:
+- No tienen un especificador de acceso.
+- No pueden declararse estáticos y no pueden declarar campos o métodos estáticos.
+- Tienen acceso a todos los campos y métodos de la clase adjunta.
+- No tienen acceso a las variables locales de un método a menos que esas variables sean definitivas o efectivamente 
+finales. 
+
+public class Outer {
+    private int length = 5; 
+    public void calculate() {
+        final int width = 20; 
+        class Inner {
+            public void multiply() { 
+                System.out.println(length * width);
+            } 
+        }
+        Inner inner = new Inner();
+        inner.multiply(); 
+    }
+    public static void main(String[] args) { 
+        Outer outer = new Outer(); 
+        outer.calculate();
+    } 
+}
+
+El compilador está generando un archivo de clase de tu clase interna. Una clase separada no tiene forma de referirse 
+a las variables locales. Si la variable local es definitiva, Java puede manejarla pasándola al constructor de la clase 
+interna o guardándola en el archivo de clase. Si no fuera efectivamente final, estos trucos no funcionarían porque el 
+valor podría cambiar después de que se hizo la copia. Hasta Java 7, el programador en realidad tuvo que escribir la 
+palabra clave final. En Java 8, se introdujo el concepto "efectivamente final". Si el código aún puede compilarse con 
+la palabra clave final insertada antes de la variable local, la variable es efectivamente final.
+
+public void isItFinal() {
+    int one = 20;
+    int two = one;
+    two++;
+    int three;
+    if ( one == 4) three = 3;
+    else three = 4;
+    int four = 4;
+    class Inner { }
+    four = 5;
+}
+
+one es efectivamente final Solo se establece en la línea en la que se declara. two no es efectivamente final. El valor se 
+cambia en la línea 41 después de que se declara. three es efectivo porque se asigna solo una vez. Esta asignación puede 
+suceder en cualquiera de las ramas de la declaración if, pero solo puede suceder en una de ellas. cuatro no es 
+efectivamente final. Aunque la asignación ocurre después de la clase interna, no está permitido.

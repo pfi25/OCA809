@@ -1,0 +1,35 @@
+Java proporciona una forma de indicar explícitamente en el código que un 
+método está siendo anulado.
+
+La anotación @Override se usa para expresar que usted, el programador, tiene 
+la intención de que este método anule uno en una superclase o implemente uno 
+desde una interfaz.
+
+class Animal {
+    public void comer() { }
+}
+
+class Gato extends Animal {
+    @Override
+    public void comer() { } 
+}
+
+@Override public void comer() { } Esta tambien es una forma correcta de escribir.
+
+class Animal {
+    public void comer() { }
+}
+
+class Gato extends Animal {
+    @Override
+    public void comer(boolean b) { } // NO COMPILA 
+}
+
+No compila porque esta sobrecargando en vez de anularlo.
+Es una buena idea adquirir el hábito de usar @Override para evitar sobrecargar accidentalmente un método.
+@Override está permitido solo cuando se hace referencia a un método. Del mismo modo que no existe la 
+posibilidad de anular un campo, la anotación tampoco se puede usar en un campo. 
+
+- Implementando un método desde una interfaz
+- Anulando un método de superclase de una clase  
+- Anulando un método declarado en Object, como hashCode, equals o toString

@@ -1,0 +1,83 @@
+abstract class Animal{
+    public abstract void alimentar();
+}
+
+class Vaca extends Animal{ --> subclase concreta(debe anular Alimentar)
+    public void Alimentar(){
+        addHierba();
+    }
+
+    private void addHierba(){}
+}
+
+class Leon extends Animal{
+    public void Alimentar(){
+        addCarne();
+    }
+
+    private void addCarne(){}
+}
+
+Ahora cada uno sabe como alimentarse
+
+public void alimentarAnimal(Animal animal){
+    animal.alimentar();
+}
+
+a ventaja es que este metodo no va a cambiar si se aumenta una subclase.
+
+Métodos virtuales son solo métodos regulares no estáticos. Java busca un método anulado en lugar 
+de usar necesariamente el de la clase que el compilador dice que tenemos.
+Java miró el tipo real de animal en tiempo de ejecución y llamo al metodo alimentar de eso.
+
+Las variables de instancia no funcionan de esta manera. En este ejemplo, la clase Animal se refiere 
+al nombre. Utiliza el que está en la superclase y no la subclase.
+
+abstract class Animal { 
+    String nombre = "???"; 
+    
+    public void imprimir() {
+        System.out.println(nombre); 
+    }
+}
+class Leon extends Animal {
+    String name = "Leo"; 
+}
+
+public class JugarConAnimal {
+    public static void main(String... args) {
+        Animal animal = new Leon();
+        animal.imprimir(); 
+    }
+}
+
+La salida es "???"
+El nombre declarado en Leon solo se usaría si se hacía referencia al nombre de Leon (o una subclase de Lion). 
+Pero no importa cómo llame a imprimir(), usará el nombre del Animal, no el del Leon.
+
+abstract class Animal { 
+    public void saludar() {
+        saludo(); 
+    }
+    public void saludo() { 
+        System.out.println("hola animal");
+    }
+}
+
+class Leon extends Animal {
+    public void saludar() { 
+        System.out.println("hola leon");
+    }
+}
+
+public class SaludarAnimal {
+    public static void main(String... args) { 
+        Animal animal = new Leon(); 
+        animal.saludar();
+    }
+}
+
+La salida es "hola leon"
+El método main crea un nuevo León y llama a saludar. Como solo la superclase Animal tiene 
+un método saludar, se ejecuta. Ese método llama saludo. Java busca métodos anulados, y ve 
+que Leon implementa saludar.

@@ -1,0 +1,57 @@
+public class AnonInner {
+    abstract class SaleTodayOnly {
+        abstract int dollarsOff(); 
+    }
+    
+    public int admission(int basePrice) { 
+        SaleTodayOnly sale = new SaleTodayOnly() {
+            int dollarsOff() { 
+                return 3; 
+            } 
+        };
+
+        return basePrice - sale.dollarsOff();
+    }
+}
+
+
+public class AnonInner { 
+    interface SaleTodayOnly {
+        int dollarsOff(); 
+    }
+
+    public int admission(int basePrice) { 
+        SaleTodayOnly sale = new SaleTodayOnly() {
+            public int dollarsOff() { 
+                return 3; 
+            } 
+        };
+    return basePrice - sale.dollarsOff();
+    }
+}
+
+Pero, ¿y si queremos implementar una interfaz y extender una clase? No se puede con una clase interna anónima, a menos 
+que la clase para extender sea java.lang.Object. Object es una clase especial, por lo que no cuenta en la regla.
+
+public class AnonInner { 
+    interface SaleTodayOnly {
+        int dollarsOff(); 
+    }
+    public int pay() {
+        return admission(5, new SaleTodayOnly() {
+            public int dollarsOff() { 
+                return 3; 
+            } 
+        });
+    }
+    public int admission(int basePrice, SaleTodayOnly sale) {
+        return basePrice - sale.dollarsOff();  
+    }
+}
+
+JButton button = new JButton("red"); 
+button.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) { 
+        // handle the button click
+    } 
+});

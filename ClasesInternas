@@ -1,0 +1,20 @@
+Una clase anidada es una clase que está definida dentro de otra clase. 
+Una clase anidada que no es estática se llama una clase interna. 
+Hay cuatro tipos de clases anidadas:
+
+- Una clase interna miembro es una clase definida en el mismo nivel que las variables 
+e instancia. No es estático A menudo, esto se conoce como una clase interna sin decir 
+explícitamente el tipo.
+
+- Una clase interna local se define dentro de un método.
+
+- Una clase interna anónima es un caso especial de una clase interna local que no tiene 
+un nombre.
+
+- Una clase anidada estática es una clase estática que se define en el mismo nivel que las 
+variables estáticas.
+
+Hay algunos beneficios de usar clases internas. Pueden encapsular clases auxiliares al 
+restringirlas a la clase contenedora. Pueden facilitar la creación de una clase que se 
+utilizará en un solo lugar. Pueden hacer que el código sea más fácil de leer. También 
+pueden hacer que el código sea más difícil de leer si se usa incorrectamente.

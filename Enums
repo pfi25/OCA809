@@ -1,0 +1,56 @@
+Una enumeración es como un conjunto fijo de constantes.
+Con las constantes numéricas, puede pasar un valor no válido y no salir hasta el tiempo de ejecución.
+Con las enumeraciones, es imposible crear un tipo de enumeración no válido sin introducir un error de 
+compilación.
+Las enumeraciones aparecen cada vez que tiene un conjunto de elementos cuyos tipos se conocen en el 
+momento de compilación.
+
+Ejemplos comunes son los días de la semana, los meses del año, los planetas en el sistema solar o las 
+cartas en una baraja.
+
+Use la palabra clave enum en lugar de la palabra clave class.
+
+public enum Estaciones {
+    OTONIO, PRIMAVERA, VERANO, INVIERNO
+}
+
+Detrás de escena, una enumeración es un tipo de clase que contiene principalmente miembros estáticos. 
+También incluye algunos métodos de ayuda como name().
+
+Estaciones s = Estaciones.VERANO;
+System.out.println(Estaciones.VERANO); // VERANO 
+System.out.println(s == Estaciones.VERANO); // true
+
+Como puede ver, las enumeraciones imprimen el nombre de la enumeración cuando se llama a toString (). 
+También son comparables usando == porque son como constantes finales estáticas.
+
+for(Estaciones estacion: Estaciones.values()) { 
+    System.out.println(estacion.name() + " " + estacion.ordinal());
+}
+
+OTONIO 0 
+PRIMAVERA 1 
+VERANO 2 
+INVIERNO 3
+
+No se puede comparar un valor int y enum directamente de todos modos. Recuerde que una enumeración es un tipo y no un int.
+
+if ( Estaciones.VERANO == 2) {} // NO COMPILA
+
+También puede crear una enumeración a partir de una cadena. Esto es útil cuando se trabaja con código anterior. Sin 
+embargo, el String pasado debe coincidir exactamente.
+
+Estaciones s1 = Estaciones.valueOf("VERANO"); // VERANO
+Estaciones s2 = Estaciones.valueOf("verano"); // exception
+
+
+La primera instrucción funciona y asigna el valor de enum apropiado a s1. La segunda declaración encuentra un problema. 
+No hay ningún valor enum con el nombre en minúscula "verano". Java levanta sus manos en señal de derrota y arroja una 
+IllegalArgumentException.
+
+No se puede extender un enum.
+
+public enum Estaciones1 extends Estaciones { } // NO COMPILA
+
+Los valores en una enumeración son todo lo que está permitido. No puede agregar más en tiempo de ejecución extendiendo 
+la enumeración.

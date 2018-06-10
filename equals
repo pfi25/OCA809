@@ -1,0 +1,70 @@
+String s1 = new String("leon");
+String s2 = new String("leon"); 
+
+System.out.println(s1.equals(s2)); //true 
+
+StringBuilder sb1 = new StringBuilder("leon"); 
+StringBuilder sb2 = new StringBuilder("leon"); 
+System.out.println(sb1.equals(sb2)); //false
+
+String tiene un método equals(). Comprueba que los valores son los mismos. 
+StringBuilder utiliza la implementación de equals() proporcionada por Object, 
+que simplemente verifica si los dos objetos a los que se hace referencia son los mismos.
+
+public class Leon {
+    private int id;
+    private int edad;
+    private String nombre;
+    
+    public Leon(int id, int edad, String nombre) {
+        this.id = id; 
+        this.edad = edad;
+        this.nombre = nombre;
+    }
+
+    @Override public boolean equals(Object obj) {
+        if ( !(obj instanceof Leon)) 
+            return false; 
+        
+        Leon otroLeon = (Leon) obj;
+        return this.id == otroLeon.id;
+    } 
+}
+
+para x!= null
+reflexivo: x.equals(x) --> true
+simetrico: x.equals(y) = true --> y.equals(x) = true
+transitivo: x.equals(y) = true ^ y.equals(z) --> x.equals(z) = true
+consistente: varias pruebas sin cambios deberian dar true
+x.equals(null) = false
+
+Debería ser obvio que un objeto y un nulo no son iguales. La clave es que equals () necesita 
+devolver false cuando esto ocurre en lugar de arrojar una NullPointerException.
+
+public boolean equals(Leon obj) {
+    if(obj == null) 
+        return false;
+    return this.id == obj.id;
+}
+
+En realidad, no hay nada de malo en este método. Es un método perfectamente bueno. Sin embargo, 
+no anula equals () de Object. Sobrecarga ese método, que probablemente no es lo que se pretendía.
+
+public boolean equals(Object obj) {
+    return EqualsBuilder.reflectionEquals(this, obj);
+}
+
+para equals(), es común observar solo una o dos variables de instancia en lugar de todos
+
+public boolean equals(Object obj) {
+    if( !(obj instanceof LeonEqualsBuilder)) 
+        return false; 
+    Leon otro = (Leon) obj;
+    return new EqualsBuilder().appendSuper(super.equals(obj))
+        .append(id, otro.id) 
+        .append(nombre, otro.nombre)
+        .isEquals();
+}
+
+Comparar el id es fácil porque puede llamar ==. Comparar el nombre significa verificar que ambos nombres 
+son nulos o que los nombres son los mismos. Si cualquiera de los nombres es nulo, debe devolver falso

@@ -1,0 +1,124 @@
+Una clase interna miembro se define en el nivel miembro de una clase (el mismo 
+nivel que los métodos, las variables de instancia y los constructores).
+
+- Se puede declarar público, privado o protegido o usar acceso predeterminado.
+- Puede extender cualquier clase e implementar interfaces.
+- Puede ser abstracto o final.
+- No se pueden declarar campos o métodos estáticos.
+- Puede acceder a los miembros de la clase externa, incluidos los miembros privados.
+
+public class Externo {
+    private String saludo = "Hola";
+    protected class Interno {
+        public int repeticion = 3;
+        public void go() {
+            for (int i = 0; i < repeticion; i++)
+                System.out.println(saludo); 
+        }
+    }
+
+    public void callInterno() { 
+        Interno inner = new Interno(); 
+        inner.go();
+    }
+
+    public static void main(String[] args) {
+        Externo outer = new Externo();
+        outer.callInterno(); 
+    } 
+}
+salida:
+
+Hola
+Hola
+Hola
+
+OBS: new Externo.Interno() es como si pusieramos new Interno()
+
+Como una clase interna miembro no es estática, debe usarse con una instancia de la clase externa.
+
+public static void main(String[] args) {
+    Externo outer = new Externo();
+    Interno inner = outer.new Interno(); // crea la clase interna
+    inner.go();
+ }
+
+ La compilación de la clase Externo.java con la que hemos estado trabajando crea dos archivos de clase. 
+ Externo.class que deberías estar esperando. Para la clase interna, el compilador crea Externo$Interno.class.
+
+ Las clases internas pueden tener los mismos nombres de variables que las clases externas. Hay una forma especial 
+ de llamar a this para decir a qué clase desea acceder. Usted tampoco está limitado a una sola clase interna.
+
+
+public class A { 
+    private int x = 10; 
+    class B {
+        private int x = 20; 
+        class C {
+            private int x = 30; 
+            public void allTheX() {
+                System.out.println(x);    //30
+                System.out.println(this.x);  //30
+                System.out.println(B.this.x);  //20
+                System.out.println(A.this.x); //10
+            }
+        }
+    }
+    public static void main(String[] args) {
+        A a = new A();
+        A.B b = a.new B(); 
+        A.B.C c = b.new C(); 
+        c.allTheX();
+    }
+}
+
+Observe que el tipo es A.B. Podríamos haber escrito B como el tipo porque está disponible en el nivel de miembro 
+de B. Java sabe dónde buscarlo. Luego, instanciamos una C. Esta vez, el tipo A.B.C es necesario para especificar. 
+C es demasiado profundo para que Java sepa dónde buscar.
+
+public class CaseOfThePrivateInterface { 
+    private interface Secret {
+        public void shh(); 
+    }
+    
+    class DontTell implements Secret { 
+        public void shh() { }
+    }
+}
+
+La interfaz en sí misma no tiene que ser pública, sin embargo. Al igual que cualquier clase interna, una interfaz 
+interna puede ser privada. Esto significa que solo se puede hacer referencia a la interfaz dentro de la clase externa 
+actual.
+
+
+package genericos;
+
+public class Main {
+	int a = 10;
+	
+	Main(){
+		Interno in1 = new Interno();
+		in1.metodo();
+		
+		Main.Interno in = new Main.Interno();
+		in.metodo();
+	}
+	class Interno{
+		void metodo() {
+			System.out.println(a);
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		Interno in = new Main().new Interno();
+		new Main();
+	}
+}
+
+Como main es estatico necesitaria un objeto de Main para acceder  a Interno.
+Main.Interno es como el this.a.
+
+new Main().new Main.Interno() esto no esta permitido. 
+No se puede asignar el tipo de miembro Main.Interno utilizando su nombre compuesto cuando se califica por una 
+instancia adjunta. El nombre del tipo de miembro se resuelve relativamente al tipo de instancia calificadora
